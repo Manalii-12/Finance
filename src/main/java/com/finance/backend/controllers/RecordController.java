@@ -9,7 +9,9 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.security.core.Authentication;
 import org.springframework.web.bind.annotation.*;
+import org.springframework.format.annotation.DateTimeFormat;
 
+import java.time.LocalDate;
 import java.util.List;
 
 @RestController
@@ -29,8 +31,12 @@ public class RecordController {
 
     @GetMapping
     @PreAuthorize("hasAnyRole('VIEWER', 'ANALYST', 'ADMIN')")
-    public ResponseEntity<List<RecordDto>> getAllRecords() {
-        return ResponseEntity.ok(recordService.getAllRecords());
+    public ResponseEntity<List<RecordDto>> getAllRecords(
+            @RequestParam(required = false) String type,
+            @RequestParam(required = false) String category,
+            @RequestParam(required = false) @DateTimeFormat(iso = DateTimeFormat.ISO.DATE) LocalDate startDate,
+            @RequestParam(required = false) @DateTimeFormat(iso = DateTimeFormat.ISO.DATE) LocalDate endDate) {
+        return ResponseEntity.ok(recordService.getAllRecords(type, category, startDate, endDate));
     }
 
     @GetMapping("/{id}")

@@ -9,8 +9,10 @@ import com.finance.backend.repositories.UserRepository;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 
+import java.time.LocalDate;
 import java.util.List;
 import java.util.stream.Collectors;
+import com.finance.backend.entities.RecordType;
 
 @Service
 @RequiredArgsConstructor
@@ -36,8 +38,17 @@ public class RecordService {
         return mapToDto(savedRecord);
     }
 
-    public List<RecordDto> getAllRecords() {
-        return recordRepository.findAll().stream()
+    public List<RecordDto> getAllRecords(String type, String category, LocalDate startDate, LocalDate endDate) {
+        RecordType recordType = null;
+        if (type != null && !type.isBlank()) {
+            try {
+                recordType = RecordType.valueOf(type.toUpperCase());
+            } catch (IllegalArgumentException e) {
+                throw new IllegalArgumentException("Invalid record type: " + type);
+            }
+        }
+
+        return recordRepository.findWithFilters(recordType, category, startDate, endDate).stream()
                 .map(this::mapToDto)
                 .collect(Collectors.toList());
     }
