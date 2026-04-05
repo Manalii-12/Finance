@@ -1,1 +1,0 @@
-{"token":"eyJhbGciOiJIUzI1NiJ9.eyJzdWIiOiJuZXdhZG1pbjIyQGV4YW1wbGUuY29tIiwiaWF0IjoxNzc1MzI4Nzg2LCJleHAiOjE3NzU0MTUxODZ9.ePadX3aPgEiyMnp3ljPSjiJLMF9lNQZ6nVb544ZuaYY","email":"newadmin22@example.com","role":"ADMIN"}
